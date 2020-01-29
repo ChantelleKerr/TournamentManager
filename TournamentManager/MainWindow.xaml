@@ -1,0 +1,109 @@
+﻿<Window x:Class="TournamentManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TournamentManager"
+        mc:Ignorable="d"
+        Title="Tournament Manager" Height="470" Width="800" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="200"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!-- Team Name Input -->
+        <StackPanel Grid.Row="0" Grid.Column="0" >
+            <Label Margin="10,0,0,0">Team Name</Label>
+            <TextBox Height="30" Width="180" Margin="0,10,0,0" Name="nameInput"></TextBox>
+            <Button Height="30" Width="80" Margin="0,10,0,0" Click="AddButton_Click" Name="Add_Btn">Add Team</Button>
+        </StackPanel>
+        
+        <!-- Team List  -->
+        <StackPanel Grid.Row="1" Grid.Column="0" >
+            <Label Margin="10,0,0,0">Registered Teams</Label>
+            <ListBox  Name="teamList" Margin="10,0,10,0" Height="170" SelectionChanged="teamList_SelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+        
+        <!-- Randomize List Button -->
+        <StackPanel Grid.Column="0" Grid.Row="2">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,20" HorizontalAlignment="Center">
+                <Button Width="50" Margin="0,0,10,0" Click="DeleteBtn_Click" Name="DeleteBtn">Delete</Button>
+                <Button Width="50" Click="UpdateNameBtn_Click" Name="UpdateBtn">Update</Button>
+            </StackPanel>
+            <Button  Height="50" Width="150" Name="Random_Btn" Click="RandomizeBtn_Click">START TOURNAMENT</Button>
+        </StackPanel>
+        
+        <!-- Bracket -->
+        <StackPanel Grid.RowSpan="3" Grid.Column="1">
+            <Label Margin="10,0,0,0">Match Ups</Label>
+            <ListBox Grid.RowSpan="2" Grid.Column="0" Margin="10" Height="220"  Name="matchList" SelectionChanged="matchList_SelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120"/>
+                                    <ColumnDefinition Width="120"/>
+                                    <ColumnDefinition Width="120"/>
+                                </Grid.ColumnDefinitions>
+                                <ListBoxItem Content="{Binding Team1}" Grid.Column="0" HorizontalAlignment="Center"  />
+                                <TextBlock Text="VS" Grid.Column="1" HorizontalAlignment="Center"/>
+                                <ListBoxItem Content="{Binding Team2}" Grid.Column="2" HorizontalAlignment="Center" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            
+        <!-- GAME SCORE -->
+            <Label  Background="#b1a1c9" Margin="10,0,10,0">GAME SCORE</Label>
+            <StackPanel Orientation="Horizontal" Margin="10,10,0,0" >
+                <Label >Team 1 Score:</Label>
+                <TextBox Name="team1Score" Width="100"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10,10,0,0" >
+                <Label>Team 2 Score:</Label>
+                <TextBox Name="team2Score" Width="100" />
+            </StackPanel>
+            <!-- Update Score Button -->
+            <Button Height="30" Width="100" Click="UpdateBtn_Click" HorizontalAlignment="Right" Margin="0,-60,50,0">Update Score</Button>
+            <!-- Next Round Button -->
+            <Button Height="50" Width="150" HorizontalAlignment="Center" Margin="0,10,0,0" Click="nextRoundBtn_Click">Next Round</Button>
+        </StackPanel> 
+        
+        <!-- Eliminated List -->
+        <StackPanel Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Center">
+            <Label >Eliminated Teams</Label>
+            <ListBox Height="250" Width="170" Margin="0,10,0,0" Name="elimList">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="85"/>
+                                <ColumnDefinition Width="65"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Name}" Grid.Column="0"/>
+                            <TextBlock Text="Placement: " Grid.Column="1"/>
+                            <TextBlock Text="{Binding Placement}" Grid.Column="2" HorizontalAlignment="Center"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+        <Button Grid.Row="2" Grid.Column="2" Height="80" Width="150" Click="RestartBtn_Click">RESTART TOURNAMENT</Button>
+    </Grid>
+</Window>
